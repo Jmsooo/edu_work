@@ -12,4 +12,7 @@ public interface CourseDao {
     //查询课程列表信息
     public List<Course> findCourseList();
 
+    //根据条件查询课程信息
+    public List<Course> findByCourseNameAndStatus(String courseName,String status);
+
 }
