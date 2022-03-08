@@ -35,4 +35,25 @@ public class CourseServlet extends BaseServlet {
         }
     }
 
+    //根据条件查询课程信息
+    public void findByCourseNameAndStatus(HttpServletRequest request, HttpServletResponse response){
+        try {
+            //1. 接收参数
+            String course_name = request.getParameter("course_name");
+            String status = request.getParameter("status");
+
+            //2. 业务处理
+            CourseService courseService = new CourseServiceImpl();
+            List<Course> courseList = courseService.findByCourseNameAndStatus(course_name, status);
+
+            //3. 返回结果
+            SimplePropertyPreFilter filter = new SimplePropertyPreFilter(Course.class, "id", "course_name", "price", "sort_num", "status");
+            String result = JSON.toJSONString(courseList, filter);
+
+            response.getWriter().print(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
