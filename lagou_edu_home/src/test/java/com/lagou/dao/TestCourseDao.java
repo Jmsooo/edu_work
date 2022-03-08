@@ -10,7 +10,6 @@ public class TestCourseDao {
 
     CourseDao courseDao = new CourseDaoImpl();
 
-    //测试 - 根据条件查询课程信息
     @Test
     public void testFindByCourseNameAndStatus() {
         List<Course> courseList = courseDao.findByCourseNameAndStatus("微服务", null);
@@ -18,6 +17,15 @@ public class TestCourseDao {
         for (Course course : courseList) {
             System.out.println(course.getId() + " " + course.getCourse_name() + " " + course.getStatus());
         }
+    }
+
+    //测试 - 查询课程列表信息
+    @Test
+    public void testFindCourseList() {
+
+        List<Course> courseList = courseDao.findCourseList();
+        System.out.println("courseList = " + courseList);
+
     }
 
 }
