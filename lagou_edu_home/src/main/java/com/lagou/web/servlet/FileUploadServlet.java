@@ -49,7 +49,8 @@ public class FileUploadServlet extends HttpServlet {
                         }else {
                             //文件上传项
                             //获取文件名
-                            String fileName = item.getString();
+                            String fileName = item.getName();
+                            System.out.println("fileName = " + fileName);
 
                             //拼接新的文件名 使用UUID保证不重复
                             String newFileName = UUIDUtils.getUUID() + "_" + fileName;
@@ -58,7 +59,7 @@ public class FileUploadServlet extends HttpServlet {
                             InputStream in = item.getInputStream();
 
                             //创建输出流
-                            FileOutputStream out = new FileOutputStream("D:/upload/" + newFileName);
+                            FileOutputStream out = new FileOutputStream("D:\\upload\\" + newFileName);
 
                             //使用IOUtils完成文件copy
                             IOUtils.copy(in,out);
