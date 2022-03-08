@@ -18,7 +18,7 @@
             2. 表单的 enctype 属性必须为 : multipart/from-data
             3. 表单中必须有文件上传项
     --%>
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="/lagou_edu_home/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="upload">
         <br>
         <input type="text" name="name">
