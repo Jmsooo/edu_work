@@ -2,7 +2,6 @@ package com.lagou.dao.impl;
 
 import com.lagou.dao.CourseDao;
 import com.lagou.pojo.Course;
-import com.lagou.utils.DateUtils;
 import com.lagou.utils.DruidUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -78,6 +77,50 @@ public class CourseDaoImpl implements CourseDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public int saveCourseSalesInfo(Course course) {
+
+        try {
+            //1. 创建 QueryRunner
+            QueryRunner queryRunner = new QueryRunner(DruidUtils.getDataSource());
+
+            //2. 编写 SQL
+            String sql = "INSERT INTO course(\n" +
+                            "course_name,\n" +
+                            "brief,\n" +
+                            "teacher_name,\n" +
+                            "teacher_info,\n" +
+                            "preview_first_field,\n" +
+                            "preview_second_field,\n" +
+                            "discounts,\n" +
+                            "price,\n" +
+                            "price_tag,\n" +
+                            "share_image_title,\n" +
+                            "share_title,\n" +
+                            "share_description,\n" +
+                            "course_description,\n" +
+                            "course_img_url,\n" +
+                            "STATUS,\n" +
+                            "create_time,\n" +
+                            "update_time\n" +
+                            ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+            //3. 准备参数
+            Object[] params = {course.getCourse_name(),course.getBrief(),course.getTeacher_name(),course.getTeacher_info(),
+                               course.getPreview_first_field(),course.getPreview_second_field(),course.getDiscounts(),course.getPrice(),
+                               course.getPrice_tag(),course.getShare_image_title(),course.getShare_title(),course.getShare_description(),
+                               course.getCourse_description(),course.getCourse_img_url(),course.getStatus(),course.getCreate_time(),course.getUpdate_time()};
+
+            //4. 执行插入操作
+            int row = queryRunner.update(sql, params);
+
+            return row;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 
