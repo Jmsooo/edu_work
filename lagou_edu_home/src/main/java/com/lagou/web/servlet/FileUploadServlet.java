@@ -33,20 +33,20 @@ public class FileUploadServlet extends HttpServlet {
             boolean multipartContent = upload.isMultipartContent(req);
 
             //2.3 是文件上传表单
-            if(multipartContent){
+            if (multipartContent) {
                 //3. 解析request 获取表单项集合
                 List<FileItem> list = upload.parseRequest(req);
-                if (list != null){
+                if (list != null) {
                     //遍历集合 获取表单项
                     for (FileItem item : list) {
                         //判断当前表单项 是否为普通表单项
                         boolean formField = item.isFormField();
-                        if (formField){
+                        if (formField) {
                             //普通表单项
                             String fieldName = item.getFieldName();
                             String fieldValue = item.getString("utf-8");
                             System.out.println(fieldName + " = " + fieldValue);
-                        }else {
+                        } else {
                             //文件上传项
                             //获取文件名
                             String fileName = item.getName();
@@ -59,10 +59,15 @@ public class FileUploadServlet extends HttpServlet {
                             InputStream in = item.getInputStream();
 
                             //创建输出流
-                            FileOutputStream out = new FileOutputStream("D:\\upload\\" + newFileName);
+                            //1. 获取项目运行目录
+                            String realPath = this.getServletContext().getRealPath("/");
+                            //2. 截取webapps目录
+                            String webappsPath = realPath.substring(0, realPath.lastIndexOf("lagou_edu_home"));
+                            System.out.println(webappsPath + "/upload/" + newFileName);
+                            FileOutputStream out = new FileOutputStream(webappsPath + "upload\\" + newFileName);
 
                             //使用IOUtils完成文件copy
-                            IOUtils.copy(in,out);
+                            IOUtils.copy(in, out);
 
                             //关闭流
                             out.close();
