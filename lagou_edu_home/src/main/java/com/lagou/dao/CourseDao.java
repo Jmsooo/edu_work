@@ -18,5 +18,8 @@ public interface CourseDao {
     //保存课程营销信息
     public int saveCourseSalesInfo(Course course);
 
+    //根据ID查询课程信息
+    public Course findCourseById(int id);
+
 
 }
