@@ -198,4 +198,24 @@ public class CourseDaoImpl implements CourseDao {
         }
     }
 
+    @Override
+    public int updateCourseStatus(Course course) {
+        try {
+            QueryRunner queryRunner = new QueryRunner(DruidUtils.getDataSource());
+
+            String sql = "UPDATE course SET\n" +
+                    "STATUS = ?,\n" +
+                    "update_time = ?\n" +
+                    "WHERE id = ?";
+
+            Object[] params = {course.getStatus(),course.getUpdate_time(),course.getId()};
+
+            int row = queryRunner.update(sql, params);
+
+            return row;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

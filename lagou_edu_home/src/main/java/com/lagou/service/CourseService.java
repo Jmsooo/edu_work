@@ -3,6 +3,7 @@ package com.lagou.service;
 import com.lagou.pojo.Course;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课程管理模块 Service 层接口
@@ -18,6 +19,8 @@ public interface CourseService {
     public Course findCourseById(int id);
 
     public String updateCourseSalesInfo(Course course);
+
+    public Map<String,Integer> updateCourseStatus(Course course);
 
 
 }

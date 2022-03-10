@@ -94,4 +94,8 @@ public class TestCourseDao {
         System.out.println("row = " + row);
     }
 
+    public void testUpdateCourseStatus(){
+
+    }
+
 }

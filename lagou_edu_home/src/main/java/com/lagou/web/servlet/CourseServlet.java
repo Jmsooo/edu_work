@@ -6,12 +6,14 @@ import com.lagou.base.BaseServlet;
 import com.lagou.pojo.Course;
 import com.lagou.service.CourseService;
 import com.lagou.service.impl.CourseServiceImpl;
+import com.lagou.utils.DateUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/course")
 public class CourseServlet extends BaseServlet {
@@ -69,6 +71,35 @@ public class CourseServlet extends BaseServlet {
                     "discounts", "preview_first_field", "preview_second_field", "course_img_url", "share_title", "share_description", "course_description", "share_image_title");
 
             String result = JSON.toJSONString(course, filter);
+
+            response.getWriter().write(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //修改课程状态
+    public void updateCourseStatus(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String id = request.getParameter("id");
+
+            CourseService courseService = new CourseServiceImpl();
+            Course course = courseService.findCourseById(Integer.parseInt(id));
+
+            int status = course.getStatus();
+
+            if (status == 0) {
+                course.setStatus(1);
+            } else {
+                course.setStatus(0);
+            }
+
+            String dateFormart = DateUtils.getDateFormart();
+            course.setUpdate_time(dateFormart);
+
+            Map<String, Integer> map = courseService.updateCourseStatus(course);
+
+            String result = JSON.toJSONString(map);
 
             response.getWriter().write(result);
         } catch (IOException e) {

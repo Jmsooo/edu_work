@@ -7,7 +7,9 @@ import com.lagou.pojo.Course;
 import com.lagou.service.CourseService;
 import com.lagou.utils.DateUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课程管理模块 Service 层的实现类
@@ -63,6 +65,22 @@ public class CourseServiceImpl implements CourseService {
             return StatusCode.SUCCESS.toString();
         } else {
             return StatusCode.FAIL.toString();
+        }
+    }
+
+    @Override
+    public Map<String, Integer> updateCourseStatus(Course course) {
+        int row = courseDao.updateCourseStatus(course);
+
+        Map<String,Integer> map = new HashMap<>();
+
+        int status = course.getStatus();
+
+        if (row > 0){
+            map.put("status",status);
+            return map;
+        }else {
+            return null;
         }
     }
 }
