@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 保存课程营销信息
- * 收集表单数据,封装到Course对象中
+ * 保存课程营销信息&修改课程营销信息
+ * 收集表单数据,封装到Course对象中 , 图片上传到tomcat服务器中
  */
 @WebServlet("/courseSalesInfo")
 public class CourseSalesInfoServlet extends HttpServlet {
@@ -87,13 +87,23 @@ public class CourseSalesInfoServlet extends HttpServlet {
             BeanUtils.populate(course, map);
 
             String dateFormart = DateUtils.getDateFormart();
-            course.setCreate_time(dateFormart);
-            course.setUpdate_time(dateFormart);
-            course.setStatus(1);
-
-            //业务处理
             CourseService courseService = new CourseServiceImpl();
-            String result = courseService.saveCourseSalesInfo(course);
+
+            String result;
+
+            if (map.containsKey("id")){
+                //修改操作
+                course.setUpdate_time(dateFormart);
+                result = courseService.updateCourseSalesInfo(course);
+            }else {
+                //新建操作
+                course.setCreate_time(dateFormart);
+                course.setUpdate_time(dateFormart);
+                course.setStatus(1);
+
+                //业务处理
+                result = courseService.saveCourseSalesInfo(course);
+            }
 
             //响应结果
             resp.getWriter().write(result);
