@@ -1,8 +1,10 @@
 package com.lagou.web.servlet;
 
+import com.lagou.base.Constants;
 import com.lagou.pojo.Course;
 import com.lagou.service.CourseService;
 import com.lagou.service.impl.CourseServiceImpl;
+import com.lagou.utils.DateUtils;
 import com.lagou.utils.UUIDUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.fileupload.FileItem;
@@ -24,7 +26,7 @@ import java.util.Map;
 
 /**
  * 保存课程营销信息
- *      收集表单数据,封装到Course对象中
+ * 收集表单数据,封装到Course对象中
  */
 @WebServlet("/courseSalesInfo")
 public class CourseSalesInfoServlet extends HttpServlet {
@@ -35,7 +37,7 @@ public class CourseSalesInfoServlet extends HttpServlet {
             Course course = new Course();
 
             //2. 创建 Map 集合, 用来收集数据
-            Map<String,Object> map = new HashMap<>();
+            Map<String, Object> map = new HashMap<>();
 
             //3. 创建磁盘对象工厂
             DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -49,14 +51,14 @@ public class CourseSalesInfoServlet extends HttpServlet {
             //6. 遍历集合, 判断哪些是普通的表单项,哪些是文件表单项
             for (FileItem item : list) {
                 boolean formField = item.isFormField();
-                if (formField){
+                if (formField) {
                     //是普通表单项,获取表单项中的数据,并保存到map中
                     String fieldName = item.getFieldName();
                     String fieldValue = item.getString("utf-8");
-                    System.out.println(fieldName +" : "+ fieldValue);
+                    System.out.println(fieldName + " : " + fieldValue);
                     //使用map收集数据
-                    map.put(fieldName,fieldValue);
-                }else {
+                    map.put(fieldName, fieldValue);
+                } else {
                     //文件上传项
                     //获取文件名
                     String fileName = item.getName();
@@ -71,18 +73,23 @@ public class CourseSalesInfoServlet extends HttpServlet {
                     //创建输出流
                     FileOutputStream out = new FileOutputStream(wabappsPath + "upload\\" + newFileName);
 
-                    IOUtils.copy(in,out);
+                    IOUtils.copy(in, out);
 
                     //关闭流
                     out.close();
                     in.close();
 
                     //将图片路径进行保存
-                    map.put("course_img_url",wabappsPath + "upload\\" + newFileName);
+                    map.put("course_img_url", Constants.LOCAL_URL + "/upload/" + newFileName);
                 }
             }
             //使用 BeanUtils 将map中的数据封装到course对象中
-            BeanUtils.populate(course,map);
+            BeanUtils.populate(course, map);
+
+            String dateFormart = DateUtils.getDateFormart();
+            course.setCreate_time(dateFormart);
+            course.setUpdate_time(dateFormart);
+            course.setStatus(1);
 
             //业务处理
             CourseService courseService = new CourseServiceImpl();
