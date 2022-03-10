@@ -36,7 +36,7 @@ public class CourseServlet extends BaseServlet {
     }
 
     //根据条件查询课程信息
-    public void findByCourseNameAndStatus(HttpServletRequest request, HttpServletResponse response){
+    public void findByCourseNameAndStatus(HttpServletRequest request, HttpServletResponse response) {
         try {
             //1. 接收参数
             String course_name = request.getParameter("course_name");
@@ -57,7 +57,7 @@ public class CourseServlet extends BaseServlet {
     }
 
     //根据ID查询课程信息
-    public void findCourseById(HttpServletRequest request,HttpServletResponse response){
+    public void findCourseById(HttpServletRequest request, HttpServletResponse response) {
 
         try {
             String id = request.getParameter("id");
@@ -65,14 +65,16 @@ public class CourseServlet extends BaseServlet {
             CourseService courseService = new CourseServiceImpl();
             Course course = courseService.findCourseById(Integer.parseInt(id));
 
-            String result = JSON.toJSONString(course);
+            SimplePropertyPreFilter filter = new SimplePropertyPreFilter(Course.class, "id", "course_name", "brief", "teacher_name", "teacher_info", "price", "price_tag",
+                    "discounts", "preview_first_field", "preview_second_field", "course_img_url", "share_title", "share_description", "course_description", "share_image_title");
+
+            String result = JSON.toJSONString(course, filter);
 
             response.getWriter().write(result);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
 
 }
