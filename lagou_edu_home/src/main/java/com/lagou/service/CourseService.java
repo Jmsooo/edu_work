@@ -15,5 +15,9 @@ public interface CourseService {
 
     public String saveCourseSalesInfo(Course course);
 
+    public Course findCourseById(int id);
+
+    public String updateCourseSalesInfo(Course course);
+
 
 }

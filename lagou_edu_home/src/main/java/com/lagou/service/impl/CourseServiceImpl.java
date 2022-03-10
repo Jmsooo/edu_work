@@ -31,7 +31,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public String saveCourseSalesInfo(Course course) {
-        String result;
 
         String dateFormart = DateUtils.getDateFormart();
         course.setCreate_time(dateFormart);
@@ -41,11 +40,29 @@ public class CourseServiceImpl implements CourseService {
         int row = courseDao.saveCourseSalesInfo(course);
 
         if (row > 0) {
-            result = StatusCode.SUCCESS.toString();
+            return StatusCode.SUCCESS.toString();
         } else {
-            result = StatusCode.FAIL.toString();
+            return StatusCode.FAIL.toString();
         }
+    }
 
-        return result;
+    @Override
+    public Course findCourseById(int id) {
+        return courseDao.findCourseById(id);
+    }
+
+    @Override
+    public String updateCourseSalesInfo(Course course) {
+
+        String dateFormart = DateUtils.getDateFormart();
+        course.setUpdate_time(dateFormart);
+
+        int row = courseDao.updateCourseSalesInfo(course);
+
+        if (row > 0) {
+            return StatusCode.SUCCESS.toString();
+        } else {
+            return StatusCode.FAIL.toString();
+        }
     }
 }
