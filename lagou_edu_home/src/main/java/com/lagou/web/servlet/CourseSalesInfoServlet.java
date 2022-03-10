@@ -67,9 +67,9 @@ public class CourseSalesInfoServlet extends HttpServlet {
 
                     String realPath = this.getServletContext().getRealPath("/");
                     String wabappsPath = realPath.substring(0, realPath.indexOf("lagou_edu_home"));
-                    System.out.println(wabappsPath + "/output/" + newFileName);
+                    System.out.println(wabappsPath + "upload\\" + newFileName);
                     //创建输出流
-                    FileOutputStream out = new FileOutputStream(wabappsPath + "/output/" + newFileName);
+                    FileOutputStream out = new FileOutputStream(wabappsPath + "upload\\" + newFileName);
 
                     IOUtils.copy(in,out);
 
@@ -78,7 +78,7 @@ public class CourseSalesInfoServlet extends HttpServlet {
                     in.close();
 
                     //将图片路径进行保存
-                    map.put("course_img_url",wabappsPath + "/output/" + newFileName);
+                    map.put("course_img_url",wabappsPath + "upload\\" + newFileName);
                 }
             }
             //使用 BeanUtils 将map中的数据封装到course对象中
