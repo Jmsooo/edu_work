@@ -77,4 +77,21 @@ public class TestCourseDao {
         System.out.println("row = " + row);
     }
 
+    //测试 - 修改课程营销信息
+    @Test
+    public void testUpdateCourseSalesInfo(){
+        //根据ID查询到课程信息
+        Course course = courseDao.findCourseById(1);
+        System.out.println("course = " + course);
+
+        course.setCourse_name("200个Java面试必考点");
+        course.setTeacher_info("Java高薪训练营");
+        course.setPrice(21600);
+        String dateFormart = DateUtils.getDateFormart();
+        course.setUpdate_time(dateFormart);
+
+        int row = courseDao.updateCourseSalesInfo(course);
+        System.out.println("row = " + row);
+    }
+
 }
