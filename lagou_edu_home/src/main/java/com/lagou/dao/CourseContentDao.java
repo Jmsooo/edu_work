@@ -20,5 +20,11 @@ public interface CourseContentDao {
     //根据课程ID 回显课程信息
     public Course findCourseByCourseId(int courseId);
 
+    //保存章节信息
     public int saveSection(Course_Section section);
+
+    //修改章节信息
+    public int updateSection(Course_Section section);
+
+
 }

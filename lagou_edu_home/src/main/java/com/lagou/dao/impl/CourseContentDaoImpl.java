@@ -112,4 +112,28 @@ public class CourseContentDaoImpl implements CourseContentDao {
             return 0;
         }
     }
+
+    @Override
+    public int updateSection(Course_Section section) {
+        try {
+            QueryRunner queryRunner = new QueryRunner(DruidUtils.getDataSource());
+            String sql = "UPDATE course_section SET\n" +
+                    "section_name = ?,\n" +
+                    "description = ?,\n" +
+                    "order_num = ?,\n" +
+                    "update_time = ?\n" +
+                    "WHERE id = ?";
+            Object[] params = {
+                    section.getSection_name(),
+                    section.getDescription(),
+                    section.getOrder_num(),
+                    section.getUpdate_time()
+            };
+            int row = queryRunner.update(sql, params);
+            return row;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }
