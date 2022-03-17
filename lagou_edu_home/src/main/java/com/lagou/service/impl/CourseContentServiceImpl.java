@@ -48,6 +48,25 @@ public class CourseContentServiceImpl implements CourseContentService {
     @Override
     public String updateSection(Course_Section section) {
 
-        return null;
+        section.setUpdate_time(DateUtils.getDateFormart());
+
+        int row = contentDao.updateSection(section);
+
+        if (row > 0){
+            return StatusCode.SUCCESS.toString();
+        }else {
+            return StatusCode.FAIL.toString();
+        }
+    }
+
+    @Override
+    public String updateSectionStatus(int id, int status) {
+        int row = contentDao.updateSectionStatus(id, status);
+
+        if (row > 0){
+            return StatusCode.SUCCESS.toString();
+        }else {
+            return StatusCode.FAIL.toString();
+        }
     }
 }

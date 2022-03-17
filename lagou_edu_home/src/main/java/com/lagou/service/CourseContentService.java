@@ -22,4 +22,6 @@ public interface CourseContentService {
     //修改章节信息
     public String updateSection(Course_Section section);
 
+    public String updateSectionStatus(int id,int status);
+
 }

@@ -62,10 +62,31 @@ public class CourseContentServlet extends BaseServlet {
             BeanUtils.populate(section,map);
 
             CourseContentService contentService = new CourseContentServiceImpl();
-            String result = contentService.saveSection(section);
+            String result;
+            if (section.getId() == 0){
+                //新增操作
+                result = contentService.saveSection(section);
+            }else {
+                //修改操作
+                result = contentService.updateSection(section);
+            }
 
             response.getWriter().write(result);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateSectionStatus(HttpServletRequest request,HttpServletResponse response){
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            int status = Integer.parseInt(request.getParameter("status"));
+
+            CourseContentService contentService = new CourseContentServiceImpl();
+            String result = contentService.updateSectionStatus(id, status);
+
+            response.getWriter().write(result);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

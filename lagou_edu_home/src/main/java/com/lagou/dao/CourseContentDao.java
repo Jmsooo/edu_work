@@ -26,5 +26,8 @@ public interface CourseContentDao {
     //修改章节信息
     public int updateSection(Course_Section section);
 
+    //修改章节状态
+    public int updateSectionStatus(int id,int status);
+
 
 }

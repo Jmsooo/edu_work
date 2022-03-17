@@ -4,6 +4,7 @@ import com.lagou.dao.CourseContentDao;
 import com.lagou.pojo.Course;
 import com.lagou.pojo.Course_Lesson;
 import com.lagou.pojo.Course_Section;
+import com.lagou.utils.DateUtils;
 import com.lagou.utils.DruidUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -129,6 +130,23 @@ public class CourseContentDaoImpl implements CourseContentDao {
                     section.getOrder_num(),
                     section.getUpdate_time()
             };
+            int row = queryRunner.update(sql, params);
+            return row;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
+    public int updateSectionStatus(int id, int status) {
+        try {
+            QueryRunner queryRunner = new QueryRunner(DruidUtils.getDataSource());
+
+            String sql = "update course_section set status = ?,update_time=? where id = ?";
+
+            Object[] params = {status, DateUtils.getDateFormart(),id};
+
             int row = queryRunner.update(sql, params);
             return row;
         } catch (SQLException e) {
